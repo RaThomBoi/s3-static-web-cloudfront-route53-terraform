@@ -11,6 +11,6 @@ resource "aws_s3_bucket_public_access_block" "website_log_bucket_public_access_c
     restrict_public_buckets = true
 }
 
-output "website_bucket_id" {
+output "website_bucket" {
   value = aws_s3_bucket.website_log_bucket_name
 }
