@@ -54,3 +54,16 @@ output "website_bucket_id" {
 output "website_bucket_endpoint" {
   value = aws_s3_bucket_website_configuration.website_bucket_website_hosting_configuration.website_endpoint
 }
+
+output "website_bucket_website_domain" {
+  value = aws_s3_bucket_website_configuration.website_bucket_website_hosting_configuration.website_domain
+}
+
+output "website_bucket_routing_rules" {
+  value = aws_s3_bucket_website_configuration.website_bucket_website_hosting_configuration.routing_rules
+}
+
+output "website_bucket_index_document" {
+  value = aws_s3_bucket_website_configuration.website_bucket_website_hosting_configuration.index_document
+}
+
