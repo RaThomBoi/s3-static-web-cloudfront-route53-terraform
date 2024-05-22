@@ -1,5 +1,5 @@
 variable "website_log_bucket_name" {
-  default = "jessada-corp-website_log-bucket"
+  default = "jessada-corp-website-log-bucket"
 }
 
 variable "cloudfront_distribution_arn" {
