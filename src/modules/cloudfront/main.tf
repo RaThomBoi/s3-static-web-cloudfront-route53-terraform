@@ -2,10 +2,17 @@ locals {
   s3_origin_id = "jessadaCorpOrigin"
 }
 
+resource "aws_cloudfront_origin_access_control" "s3_oac" {
+  name = "website_OAC_S3_access"
+  origin_access_control_origin_type = "s3"
+  signing_behavior = "always"
+  signing_protocol = "sigv4"
+}
+
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = var.origin_domain_name
-    origin_access_control_id = aws_cloudfront_origin_access_control.default.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.s3_oac.id
     origin_id = local.s3_origin_id
   }
 
@@ -15,7 +22,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
     logging_config {
       include_cookies = false
-      bucket = var.log_bucket
+      bucket = var.log_bucket_id
     }
 
     # aliases = ["jesscorp.com"]
@@ -44,7 +51,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     path_pattern     = "/content/immutable/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = locals.s3_origin_id
+    target_origin_id = local.s3_origin_id
 
     forwarded_values {
       query_string = false
@@ -67,7 +74,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     path_pattern     = "/content/*"
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = locals.s3_origin_id
+    target_origin_id = local.s3_origin_id
 
     forwarded_values {
       query_string = false
@@ -105,4 +112,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   output "cloudfront_distribution_hosted_zone_id" {
     value = aws_cloudfront_distribution.s3_distribution.hosted_zone_id
+  }
+
+  output "distribution_arn" {
+    value = aws_cloudfront_distribution.s3_distribution.arn
   }
