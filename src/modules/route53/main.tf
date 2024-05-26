@@ -1,14 +1,11 @@
-resource "aws_route53_zone" "priamry" {
-  name = var.aws_route53_zone_name
-}
-
-resource "aws_route53_record" "www" {
-  zone_id = aws_route53_zone.priamry.zone_id
-  name = var.aws_route53_record_name
+resource "aws_route53_record" "main" {
+  name = var.a_alias_record_to_cloudfront_distribution
   type = "A"
+  zone_id = var.hosted_zone_id
+
   alias {
+    evaluate_target_health = false
     name = var.cloudfront_distribution_domain_name
-    evaluate_target_health = true
-    zone_id = var.cloudfront_distribution_hosted_zone_id
+    zone_id = var.aws_cloudfront_distribution_hosted_zone_id
   }
 }

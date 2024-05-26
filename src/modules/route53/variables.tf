@@ -1,17 +1,18 @@
-variable "cloudfront_distribution_domain_name" {
-    description = "CloudFront distribution domain name"
+variable "hosted_zone_id" {
     type = string
+    default = "your hosted zone id"
 }
 
-variable "cloudfront_distribution_hosted_zone_id" {
-  description = "CloudFront distribution hosted zone's id used for Route53 alias name configuration"
+variable "a_alias_record_to_cloudfront_distribution" {
+  description = "A record which alias to s3's cloudfront distribution "
+  default = "dev"
+}
+
+variable "cloudfront_distribution_domain_name" {
+  description = "Domain name of CloudFront distribution (that we set alias to it in cloudfront module)"
   type = string
 }
 
-variable "aws_route53_zone_name" {
-  default = "jessadasrimoon.com"
-}
-
-variable "aws_route53_record_name" {
-   default = "www.jessadasrimoon.com"
+variable "aws_cloudfront_distribution_hosted_zone_id" {
+  type = string
 }
